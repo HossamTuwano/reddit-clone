@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Home, Communities, Chat, Create, Inbox } from "./screens";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; 
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 type RootStackParamList = {
   Home: undefined;
@@ -24,21 +24,31 @@ export default function StackNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
+          // focused ? color = 'black' ? : color='gray';
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Communities")
             iconName = focused ? "account-group" : "account-group-outline";
-            else if(route.name === 'Create') iconName = focused ? 'plus' : 'plus'; 
-            else if(route.name === 'Chat') iconName = focused ? 'chat-processing' : 'chat-processing-outline'; 
-            else if(route.name === 'Inbox') iconName = focused ? 'bell' : 'bell-outline'; 
+          else if (route.name === "Create")
+            iconName = focused ? "plus" : "plus";
+          else if (route.name === "Chat")
+            iconName = focused ? "chat-processing" : "chat-processing-outline";
+          else if (route.name === "Inbox")
+            iconName = focused ? "bell" : "bell-outline";
 
           return (
-            <>
-              <MaterialCommunityIcons size={size} focused={focused} name={iconName} />
-            </>
+            <MaterialCommunityIcons
+              size={size}
+              focused={focused}
+              name={iconName}
+              color={color}
+            />
           );
         },
+
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "gray",
       })}
     >
       <Tab.Screen
