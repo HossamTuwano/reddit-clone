@@ -7,6 +7,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Home, Communities, Chat, Create, Inbox } from "./screens";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Header from "./components/header";
 
 type RootStackParamList = {
   Home: undefined;
@@ -14,11 +16,13 @@ type RootStackParamList = {
   Chat: undefined;
   Create: undefined;
   Inbox: undefined;
+  Header: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
-export default function StackNavigator() {
+function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -46,36 +50,35 @@ export default function StackNavigator() {
             />
           );
         },
-
+        tabBarLabelStyle: { paddingBottom: 3 },
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",
+        headerShown: false,
       })}
     >
-      <Tab.Screen
-        name="Home"
-        options={{ headerShown: false }}
-        component={Home}
-      />
-      <Tab.Screen
-        name="Communities"
-        options={{ headerShown: false }}
-        component={Communities}
-      />
-      <Tab.Screen
-        name="Create"
-        options={{ headerShown: false }}
-        component={Create}
-      />
-      <Tab.Screen
-        name="Chat"
-        options={{ headerShown: false }}
-        component={Chat}
-      />
-      <Tab.Screen
-        name="Inbox"
-        options={{ headerShown: false }}
-        component={Inbox}
-      />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Communities" component={Communities} />
+      <Tab.Screen name="Create" component={Create} />
+      <Tab.Screen name="Chat" component={Chat} />
+      <Tab.Screen name="Inbox" component={Inbox} />
     </Tab.Navigator>
+  );
+}
+
+export default function StackNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: ({ navigation, options, route, back }) => {
+          return <Header />;
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Tabs"
+        component={TabNavigator}
+        options={{ headerShown: true }}
+      />
+    </Stack.Navigator>
   );
 }
