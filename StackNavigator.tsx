@@ -1,14 +1,15 @@
 import { View, Text } from "react-native";
 import React from "react";
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Communities, Chat, Create, Inbox } from "./screens";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/header";
+import {
+  DrawerNavigationProp,
+  createDrawerNavigator,
+} from "@react-navigation/drawer";
+import LeftDrawerScreen from "./screens/left-drawer-screen";
 
 type RootStackParamList = {
   Home: undefined;
@@ -21,6 +22,7 @@ type RootStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const Stack = createNativeStackNavigator();
+const DrawerNav = createDrawerNavigator();
 
 function TabNavigator() {
   return (
@@ -67,18 +69,21 @@ function TabNavigator() {
 
 export default function StackNavigator() {
   return (
-    <Stack.Navigator
+    <DrawerNav.Navigator
       screenOptions={{
-        header: ({ navigation, options, route, back }) => {
-          return <Header />;
+        drawerPosition: "left",
+        drawerStyle: { width: 300 },
+        header: ({ navigation }) => {
+          return <Header navigation={navigation} />;
         },
       }}
     >
-      <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
-        options={{ headerShown: true }}
+      <Stack.Screen name="All" component={TabNavigator} />
+
+      <DrawerNav.Screen
+        name="Log in to add you communities"
+        component={LeftDrawerScreen}
       />
-    </Stack.Navigator>
+    </DrawerNav.Navigator>
   );
 }
