@@ -10,6 +10,9 @@ import {
   createDrawerNavigator,
 } from "@react-navigation/drawer";
 import LeftDrawerScreen from "./screens/left-drawer-screen";
+import Form from "./components/form";
+import RightDrawerContent from "./components/right-drawer-content";
+import LeftDrawerContent from "./components/left-drawer-content";
 
 type RootStackParamList = {
   Home: undefined;
@@ -22,14 +25,15 @@ type RootStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const Stack = createNativeStackNavigator();
-const DrawerNav = createDrawerNavigator();
+const LeftDrawer = createDrawerNavigator();
+const RightDrawer = createDrawerNavigator();
 
 function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+          let iconName: string = "";
           // focused ? color = 'black' ? : color='gray';
 
           if (route.name === "Home") {
@@ -67,9 +71,25 @@ function TabNavigator() {
   );
 }
 
-export default function StackNavigator() {
+function LeftDrawerNavigator() {
   return (
-    <DrawerNav.Navigator
+    <LeftDrawer.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <LeftDrawer.Screen
+        name="Left"
+        component={TabNavigator}
+      />
+    </LeftDrawer.Navigator>
+  );
+}
+function RightDrawerNavigator() {
+  return (
+    <RightDrawer.Navigator
+      id="LeftDrawer"
+      drawerContent={LeftDrawerContent}
       screenOptions={{
         drawerPosition: "left",
         drawerStyle: { width: 300 },
@@ -78,12 +98,22 @@ export default function StackNavigator() {
         },
       }}
     >
-      <Stack.Screen name="All" component={TabNavigator} />
+      <RightDrawer.Screen name="Sign up" component={LeftDrawerNavigator} />
+    </RightDrawer.Navigator>
+  );
+}
 
-      <DrawerNav.Screen
-        name="Log in to add you communities"
-        component={LeftDrawerScreen}
-      />
-    </DrawerNav.Navigator>
+export default function StackNavigator() {
+  return (
+    <LeftDrawer.Navigator
+      id="RightDrawer"
+      drawerContent={RightDrawerContent}
+      screenOptions={{
+        drawerPosition: "right",
+        headerShown: false,
+      }}
+    >
+      <LeftDrawer.Screen name="Right" component={RightDrawerNavigator} />
+    </LeftDrawer.Navigator>
   );
 }
