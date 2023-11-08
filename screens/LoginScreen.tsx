@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function RightDrawerScreen() {
+export default function LoginScreen() {
   return (
     <View>
-      <Text>RightDrawerScreen</Text>
+      <Text>LoginScreen</Text>
     </View>
   )
 }

@@ -22,7 +22,7 @@ const Header = ({ navigation }) => {
         </View>
         <View className="flex-row space-x-3 items-center">
           <Icon name="magnify" size={30} color="#000" />
-          <Pressable onPress={() => console.log(navigation.getParent().toggleDrawer())}>
+          <Pressable onPress={() => navigation.getParent().toggleDrawer()}>
             <Entypo name="user" size={30} color="#000" />
           </Pressable>
         </View>
