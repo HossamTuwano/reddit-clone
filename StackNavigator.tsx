@@ -12,6 +12,7 @@ import {
 import RightDrawerContent from "./screens/right-drawer-content";
 import LeftDrawerContent from "./screens/left-drawer-content";
 import AuthScreen from "./screens/AuthScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 type RootStackParamList = {
   Home: undefined;
@@ -93,7 +94,6 @@ function RightDrawerNavigator() {
         },
       }}
     >
-
       <RightDrawer.Screen name="Sign up" component={TabNavigator} />
     </RightDrawer.Navigator>
   );
@@ -113,6 +113,7 @@ export default function StackNavigator() {
       <LeftDrawer.Screen name="Right" component={RightDrawerNavigator} />
 
       <Stack.Group>
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="AuthScreen" component={AuthScreen} />
       </Stack.Group>
     </LeftDrawer.Navigator>
